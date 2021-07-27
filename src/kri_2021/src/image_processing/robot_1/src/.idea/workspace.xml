@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e18b89cc-87a7-44f5-bde4-3417a81a7fce" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../build/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/CMakeCache.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/CMakeFiles/TargetDirectories.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/CTestTestfile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/CTestTestfile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/LKR/catkin_generated/installspace/LKRConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/LKR/catkin_generated/installspace/LKRConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/LL/catkin_generated/installspace/LLConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/LL/catkin_generated/installspace/LLConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/LMB/catkin_generated/installspace/LMBConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/LMB/catkin_generated/installspace/LMBConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/atomic_configure/_setup_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/atomic_configure/_setup_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/catkin_generated/generate_cached_setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/catkin_generated/generate_cached_setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/catkin_generated/installspace/_setup_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/catkin_generated/installspace/_setup_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/catkin_generated/order_packages.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/catkin_generated/order_packages.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/catkin_generated/order_packages.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/catkin_generated/order_packages.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/catkin_generated/setup_cached.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/catkin_generated/setup_cached.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/catkin_generated/stamps/Project/_setup_util.py.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/catkin_generated/stamps/Project/_setup_util.py.stamp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/catkin_make.cache" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/catkin_make.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/cmake_install.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/cmake_install.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/communicating/catkin_generated/installspace/communicatingConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/communicating/catkin_generated/installspace/communicatingConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/manuvering/berputar/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/manuvering/berputar/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/manuvering/berputar/catkin_generated/installspace/berputarConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/manuvering/berputar/catkin_generated/installspace/berputarConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/manuvering/giring/catkin_generated/installspace/giringConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/manuvering/giring/catkin_generated/installspace/giringConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/manuvering/keseimbangan/catkin_generated/installspace/keseimbanganConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/manuvering/keseimbangan/catkin_generated/installspace/keseimbanganConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/manuvering/lari/catkin_generated/installspace/lariConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/manuvering/lari/catkin_generated/installspace/lariConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../build/manuvering/tendang/catkin_generated/installspace/tendangConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../build/manuvering/tendang/catkin_generated/installspace/tendangConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/_setup_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/_setup_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/LKR/cmake/LKRConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/LKR/cmake/LKRConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/LL/cmake/LLConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/LL/cmake/LLConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/LMB/cmake/LMBConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/LMB/cmake/LMBConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/berputar/cmake/berputarConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/berputar/cmake/berputarConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/communicating/cmake/communicatingConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/communicating/cmake/communicatingConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/giring/cmake/giringConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/giring/cmake/giringConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/keseimbangan/cmake/keseimbanganConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/keseimbangan/cmake/keseimbanganConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/lari/cmake/lariConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/lari/cmake/lariConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../devel/share/tendang/cmake/tendangConfig.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/../../../devel/share/tendang/cmake/tendangConfig.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../image_proses/msg/CircleSetStamped.msg" beforeDir="false" afterPath="$PROJECT_DIR$/../../image_proses/msg/CircleSetStamped.msg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../image_proses/src/deteksiBola/video/out1.mkv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../image_proses/src/deteksiBola/video/out2.mkv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../image_proses/src/deteksiTiang/02_deteksi_tiang/tes3_tiang_deteksi.py" beforeDir="false" afterPath="$PROJECT_DIR$/../../image_proses/src/deteksiTiang/02_deteksi_tiang/tes3_tiang_deteksi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../image_proses/src/deteksiTiang/video/out1.webm" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
+  <component name="ProjectId" id="1hwnX9kiVA9TthbcfDpnJ99BjBT" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e18b89cc-87a7-44f5-bde4-3417a81a7fce" name="Default Changelist" comment="" />
+      <created>1600931058760</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1600931058760</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="743" y="283" width="430" height="481" key="FileChooserDialogImpl" timestamp="1600931072371">
+      <screen x="0" y="0" width="1920" height="1047" />
+    </state>
+    <state x="743" y="283" width="430" height="481" key="FileChooserDialogImpl/0.0.1920.1047@0.0.1920.1047" timestamp="1600931072371" />
+  </component>
+</project>
