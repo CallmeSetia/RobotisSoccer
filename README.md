@@ -6,8 +6,8 @@ Workspace disesuaikan dengan struktur folder ROS (Robot Operating System),
         RobotisSoccer/          # WORKSPACE NAME "RobotisSoccer" 
             - devel/            # DEVEL FOLDER UNTUK ROS CONFIGUTATOR
             - build/            # BUILD FOLDER UNTUK ROS
+            -CMakeList.txt     # Top-Level CMakeList
             - src/              # SOURCE FILE
-                -`CMakeList.txt     # Top-Level CMakeList
                 - kri2020/          # ARSIP KRI 2020 
                 - kri_2021/         # KRI 2021 
                     - src/              # SOURCE CODE KRI 2021
@@ -53,4 +53,4 @@ Workspace disesuaikan dengan struktur folder ROS (Robot Operating System),
 
 
 ##### MAINTAINER
-1. Dwi Setia Fardhana (admin@bengkelti.com)
+1. Dwi Setia Fardhana
