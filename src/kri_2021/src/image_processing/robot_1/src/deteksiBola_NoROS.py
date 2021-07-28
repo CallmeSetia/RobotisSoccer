@@ -65,7 +65,7 @@ cv2.createTrackbar('V_max', 'result',255,255,nothing)
 
 cv2.createTrackbar('Min_Radius', 'result',255,255,nothing)
 
-video = FileVideoStream(0, transform=filterFrame).start()
+video = FileVideoStream(1, transform=filterFrame).start()
 time.sleep(1.0)
 
 while video.running():
@@ -102,17 +102,13 @@ while video.running():
     mask = cv2.erode(mask, kernel, iterations=3)
 
     cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2] #
-
-    # contour_sizes = [(cv2.contourArea(contour), contour) for contour in cnts]
-    # biggest_contour = max(contour_sizes, key=lambda x: x[0]) [1]
-
-    # cv2.drawContours(frame, biggest_contour, -1, (0, 255, 0), 3)
-
-
     center = None
 
     if (len(cnts) > 0):
-        x, y, x_ball, y_ball, radius, center, flag = DeteksiBola_Kontur(cnts, lebar, tinggi, Min_Radius)
+
+        sortedKontur = sorted(cnts, key=cv2.contourArea, reverse=True)
+        # x, y, x_ball, y_ball, radius, center, flag = DeteksiBola_Kontur(cnts, lebar, tinggi, Min_Radius)
+        x, y, x_ball, y_ball, radius, center, flag = DeteksiBola_Kontur(sortedKontur, lebar, tinggi, Min_Radius)
 
         if flag > 0:
             cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
