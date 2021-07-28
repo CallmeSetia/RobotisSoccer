@@ -13,15 +13,52 @@ def filterFrame(frame):
     frame = imutils.resize(frame, width=450)
     return frame
 
+
+def get_LuasKontur(contours):
+
+    all_kontur= []
+
+    for cnt in contours:
+        area= cv2.contourArea(cnt)
+        all_kontur.append(area)
+
+    return all_kontur
+
+def DeteksiBola_Kontur(Kontur, lebarFrame,  tinggiFrame, minRadius = 5):
+    """
+    :param Conturs:  Detesi Bola By Kontur
+    :param Min_Radius: Minimal Radius
+    :return:
+    """
+    c = max(Kontur, key=cv2.contourArea)
+    ((x, y), radius) = cv2.minEnclosingCircle(c)
+
+    M = cv2.moments(c)
+    center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
+
+    flagDetek,x_bola, y_bola = 0, 0, 0
+
+    if radius > int(minRadius):
+        x_bola = (x / lebarFrame) * 2 - 1
+        y_bola = (y / tinggiFrame) * 2 - 1
+        flagDetek = 1
+
+    else:
+        flagDetek = 0
+
+    return x, y, x_bola, y_bola, radius, center, flagDetek
+
+
+
 cv2.namedWindow('result')
 
 kernel = np.ones((5,5),np.uint8)
 # 5, 64, 119 - 255, 255, 255
 
 # Trackbar
-cv2.createTrackbar('H_min', 'result',0,255,nothing)
+cv2.createTrackbar('H_min', 'result',0 ,255,nothing)
 cv2.createTrackbar('H_max', 'result',255,255,nothing)
-cv2.createTrackbar('S_min', 'result',0,255,nothing)
+cv2.createTrackbar('S_min', 'result',0 ,255,nothing)
 cv2.createTrackbar('S_max', 'result',255,255,nothing)
 cv2.createTrackbar('V_min', 'result',0,255,nothing)
 cv2.createTrackbar('V_max', 'result',255,255,nothing)
@@ -64,36 +101,35 @@ while video.running():
     mask = cv2.dilate(mask, kernel, iterations=3)
     mask = cv2.erode(mask, kernel, iterations=3)
 
-    cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]
+    cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2] #
+
+    # contour_sizes = [(cv2.contourArea(contour), contour) for contour in cnts]
+    # biggest_contour = max(contour_sizes, key=lambda x: x[0]) [1]
+
+    # cv2.drawContours(frame, biggest_contour, -1, (0, 255, 0), 3)
+
+
     center = None
 
     if (len(cnts) > 0):
-        c = max(cnts, key=cv2.contourArea)
-        ((x, y), radius) = cv2.minEnclosingCircle(c)
+        x, y, x_ball, y_ball, radius, center, flag = DeteksiBola_Kontur(cnts, lebar, tinggi, Min_Radius)
 
-        M = cv2.moments(c)
-        center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
-
-        if radius > int(Min_Radius):
+        if flag > 0:
             cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
             cv2.circle(frame, center, 3, (0, 0, 255), -1)
             cv2.putText(frame, "BOLA", (center[0] + 10, center[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 0, 0), 1)
             cv2.putText(frame, "(" + str(center[0]) + "," + str(center[1]) + ")", (center[0] + 10, center[1] + 15),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 1)
 
-            x_bola = (x / lebar) * 2 - 1
-            y_bola = (y / tinggi) * 2 - 1
-
-            print("X_BOLA : {} - Y_BOLA : {} == STATE BOLA: {}  " . format(x_bola, y_bola, "DETEK"))
-
-        else :
-            print(" == STATE BOLA: {}  ".format("NOT DETECTED"))
+            print("X_BALL: {} - Y_BALL: {}".format(x_ball, y_ball))
+            print("X_Center: {} - Y_Center: {}".format((center[0] / lebar) * 2 - 1, (center[1] / tinggi) * 2 - 1))
 
     cv2.imshow('result', result)
     cv2.imshow('Masking', mask)
     cv2.imshow('OPENNING', opening)
     cv2.imshow('CLOSSING', closing)
     cv2.imshow("Frame", frame)
+
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
