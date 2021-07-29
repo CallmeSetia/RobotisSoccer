@@ -1,3 +1,7 @@
+# ========= { DETEKSI BOLA v2.2} ===================
+#  Deteksi Bola - Kipsta PINK
+#
+
 from imutils.video import FileVideoStream
 # from imutils.video import FPS
 
@@ -15,9 +19,7 @@ def filterFrame(frame):
 
 
 def get_LuasKontur(contours):
-
     all_kontur= []
-
     for cnt in contours:
         area= cv2.contourArea(cnt)
         all_kontur.append(area)
@@ -65,7 +67,7 @@ cv2.createTrackbar('V_max', 'result',255,255,nothing)
 
 cv2.createTrackbar('Min_Radius', 'result',255,255,nothing)
 
-video = FileVideoStream(1, transform=filterFrame).start()
+video = FileVideoStream(0, transform=filterFrame).start()
 time.sleep(1.0)
 
 while video.running():
@@ -117,7 +119,7 @@ while video.running():
             cv2.putText(frame, "(" + str(center[0]) + "," + str(center[1]) + ")", (center[0] + 10, center[1] + 15),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 1)
 
-            print("X_BALL: {} - Y_BALL: {}".format(x_ball, y_ball))
+            # print("X_BALL: {} - Y_BALL: {}".format(x_ball, y_ball))
             print("X_Center: {} - Y_Center: {}".format((center[0] / lebar) * 2 - 1, (center[1] / tinggi) * 2 - 1))
 
     cv2.imshow('result', result)
