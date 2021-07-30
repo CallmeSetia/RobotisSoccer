@@ -27,8 +27,9 @@ import imutils
 class DeteksiBola_Pink:
 
     trackbar = False
-    hsvLower, hsvUpper, MinRadius = [0,0,0], [255, 255, 255], 5
+    hsvLower, hsvUpper, MinRadius = [158, 55, 79], [178, 200, 255], 5
     fokalLensaKamera = 0.0
+    lebarBola_Real = 14.6 #cm
 
     def __init__(self, UseTrackbar = False):
 
@@ -117,38 +118,26 @@ class DeteksiBola_Pink:
             x, y, x_ball, y_ball, radius, center, flag = self.DeteksiBola_Kontur(sortedKontur,
                                                                                  lebarFrame,
                                                                                  tinggiFrame,
-                                                                                 5)
+                                                                              5)
 
             if flag > 0:
                 diameter = float(radius * 2)
-                # distance from camera to object(face) measured
-                # centimeter
-                Known_distance = 60
-                # width of face in the real world or Object Plane
-                # centimeter
-                Known_width = 14.3
+                jarakObjek_REAL = 64.2 # cm
 
-                DeteksiBola_Pink.fokalLensaKamera =self.Focal_Length_Finder(Known_distance, Known_width, diameter)
-
-                return 1
-            return 0
-
-    # focal length finder function
-    def Focal_Length_Finder(self, measured_distance, real_width, width_in_rf_image):
-        focal_length = (width_in_rf_image * measured_distance) / real_width
-        return focal_length
-
-    # distance estimation function
-    def Distance_finder(self, Focal_Length, real_face_width, face_width_in_frame):
-        distance = (real_face_width * Focal_Length) / face_width_in_frame
-        return distance
+                DeteksiBola_Pink.fokalLensaKamera = self.fokalKamera(jarakObjek_REAL, DeteksiBola_Pink.lebarBola_Real, diameter)
+                return True
+            else:
+                return False
 
 
-    def focalKamera (self, lebarObjek_Gambar, jarakRealDariKamera, lebarObjek_Real ):
-        return  (lebarObjek_Gambar * jarakRealDariKamera) / lebarObjek_Real
 
-    def jarakKeKamera(self,lebarObjek_Real, fokalKamera, lebarObjek_Gambar ):
-        return (lebarObjek_Real * fokalKamera) / lebarObjek_Gambar
+    def fokalKamera (self, lebarObjek_Gambar, jarakRealDariKamera, lebarObjek_Real ):
+        fokalKamera = (lebarObjek_Real * lebarObjek_Gambar) / jarakRealDariKamera
+        return fokalKamera
+
+    def jarakDariKamera(self,lebarObjek_Real, fokalKamera, lebarObjek_Gambar ):
+        jarak =  (lebarObjek_Real * fokalKamera) / lebarObjek_Gambar
+        return jarak
 
     def DeteksiBola_Kontur(self, Kontur, lebarFrame, tinggiFrame, minRadius=5):
         """
@@ -241,16 +230,11 @@ class DeteksiBola_Pink:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 1)
 
                 diameter = float(radius * 2)
-                bolaRealWidth = 6 # 15 cm diameter => 5.9 inci
-                jarakRealDariKamera = 39.37 # 1 Meter dalam Inch
-
-                fokalKamera = self.focalKamera(diameter, jarakRealDariKamera, bolaRealWidth )
-                # 351.80207245464
-
-                jarak = self.jarakKeKamera(jarakRealDariKamera, fokalKamera, diameter ) / 10
+                jarak = self.jarakDariKamera(DeteksiBola_Pink.fokalLensaKamera, DeteksiBola_Pink.lebarBola_Real, diameter)
 
                 x = (x / lebarFrame) * 2 - 1
                 y = (y / tinggiFrame) * 2 - 1
+
                 # circleMsg = CircleSetStamped()
                 # circlePoint = Point()
                 # circlePoint.x = (center[0] / lebarFrame) * 2 - 1
@@ -260,7 +244,9 @@ class DeteksiBola_Pink:
                 #
                 # self.koordinatBola.publish(circleMsg)
                 # print(fokalKamera)
-                print("X_Center: {} - Y_Center: {} - Radius Bola : {} \n Jarak : {} inci \n Fokal : {} ".format(x, y, radius, jarak, fokalKamera))
+
+                print("X_Center: {} - Y_Center: {} - Radius Bola : {} \n Jarak : {} cm  cm ".format(x, y, radius, jarak))
+
 
             # self.state_bola(flag)
 
