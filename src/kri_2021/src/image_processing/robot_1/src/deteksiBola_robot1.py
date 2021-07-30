@@ -28,10 +28,15 @@ class DeteksiBola_Pink:
 
     trackbar = False
     hsvLower, hsvUpper, MinRadius = [0,0,0], [255, 255, 255], 5
+    fokalLensaKamera = 0.0
 
     def __init__(self, UseTrackbar = False):
 
         self.bridge = CvBridge()
+        if self.kalibrasiGambar_Bola('bola_pink.png') is True:
+            print("FOKAL LENSA KAMERA : {} ".format(DeteksiBola_Pink.fokalLensaKamera))
+        else :
+            print("GAGAL KALIBRASI GAMBAR BOLA PINK")
 
         self.image_sub = rospy.Subscriber("usb_cam_node/image_raw", Image, self.callback_image)
         self.mask_pub = 0
@@ -85,6 +90,59 @@ class DeteksiBola_Pink:
             all_kontur.append(area)
 
         return all_kontur
+    def kalibrasiGambar_Bola (self, src_gambar) :
+        src_gambar = cv2.imread(src_gambar)
+
+        lowerHsv = np.array([158, 55, 79])
+        upperHsv = np.array([178, 200, 255])
+        kernel = np.ones((5, 5), np.uint8)
+
+        src_gambar = self.filterFrame(src_gambar)
+        lebarFrame = src_gambar.shape[1]
+        tinggiFrame = src_gambar.shape[0]
+        mask = cv2.inRange(cv2.cvtColor(src_gambar, cv2.COLOR_BGR2HSV), lowerHsv, upperHsv)
+
+
+        mask = cv2.dilate(cv2.morphologyEx(mask, cv2.MORPH_CLOSE,
+                          cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))),
+                          cv2.getStructuringElement(cv2.MORPH_RECT, (5, 5)),
+                          iterations=3)
+        mask = cv2.erode(mask, kernel, iterations=2)
+        cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]  #
+
+        if (len(cnts) > 0):
+
+            sortedKontur = sorted(cnts, key=cv2.contourArea, reverse=True)
+
+            x, y, x_ball, y_ball, radius, center, flag = self.DeteksiBola_Kontur(sortedKontur,
+                                                                                 lebarFrame,
+                                                                                 tinggiFrame,
+                                                                                 5)
+
+            if flag > 0:
+                diameter = float(radius * 2)
+                # distance from camera to object(face) measured
+                # centimeter
+                Known_distance = 60
+                # width of face in the real world or Object Plane
+                # centimeter
+                Known_width = 14.3
+
+                DeteksiBola_Pink.fokalLensaKamera =self.Focal_Length_Finder(Known_distance, Known_width, diameter)
+
+                return 1
+            return 0
+
+    # focal length finder function
+    def Focal_Length_Finder(self, measured_distance, real_width, width_in_rf_image):
+        focal_length = (width_in_rf_image * measured_distance) / real_width
+        return focal_length
+
+    # distance estimation function
+    def Distance_finder(self, Focal_Length, real_face_width, face_width_in_frame):
+        distance = (real_face_width * Focal_Length) / face_width_in_frame
+        return distance
+
 
     def focalKamera (self, lebarObjek_Gambar, jarakRealDariKamera, lebarObjek_Real ):
         return  (lebarObjek_Gambar * jarakRealDariKamera) / lebarObjek_Real
