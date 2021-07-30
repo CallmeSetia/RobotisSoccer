@@ -69,6 +69,15 @@ class DeteksiBola_Pink:
         frame = imutils.resize(frame, width=450)
         return frame
 
+    def get_Kontur(self, kontur):
+        if len(kontur) == 2:
+            kontur = kontur[0]
+        elif len(kontur) == 3:
+            kontur = kontur[1]
+
+        return kontur
+
+
     def get_LuasKontur(self, contours):
         all_kontur = []
         for cnt in contours:
@@ -76,6 +85,12 @@ class DeteksiBola_Pink:
             all_kontur.append(area)
 
         return all_kontur
+
+    def focalKamera (self, lebarObjek_Gambar, jarakRealDariKamera, lebarObjek_Real ):
+        return  (lebarObjek_Gambar * jarakRealDariKamera) / lebarObjek_Real
+
+    def jarakKeKamera(self,lebarObjek_Real, fokalKamera, lebarObjek_Gambar ):
+        return (lebarObjek_Real * fokalKamera) / lebarObjek_Gambar
 
     def DeteksiBola_Kontur(self, Kontur, lebarFrame, tinggiFrame, minRadius=5):
         """
@@ -102,7 +117,7 @@ class DeteksiBola_Pink:
         return x, y, x_bola, y_bola, radius, center, flagDetek
 
     def callback_image(self, data):
-        print("PROCESSING")
+        # print("PROCESSING")
         try:
             frame = self.bridge.imgmsg_to_cv2(data, "bgr8")
         except CvBridgeError as e:
@@ -142,19 +157,21 @@ class DeteksiBola_Pink:
         opening = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernels_0)
         closing = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7)))
 
-        mask = cv2.erode(closing, kernel, iterations=3)
-        mask = cv2.dilate(mask, kernel, iterations=3)
+        mask = cv2.dilate(closing, kernel, iterations=3)
+        # mask = cv2.dilate(mask, kernel, iterations=1)
 
-        mask = cv2.dilate(mask, kernel, iterations=3)
         mask = cv2.erode(mask, kernel, iterations=2)
+        # mask = cv2.erode(mask, kernel, iterations=2)
         
         result = cv2.bitwise_and(frame, frame, mask=mask)
 
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]  #
 
+
         if (len(cnts) > 0):
 
             sortedKontur = sorted(cnts, key=cv2.contourArea, reverse=True)
+            # print("KONTUR MIN RECT : {}".format(cv2.minAreaRect(sortedKontur[0])))
             # x, y, x_ball, y_ball, radius, center, flag = DeteksiBola_Kontur(cnts, lebar, tinggi, Min_Radius)
             x, y, x_ball, y_ball, radius, center, flag = self.DeteksiBola_Kontur(sortedKontur, lebarFrame, tinggiFrame, Min_Radius)
 
@@ -164,6 +181,15 @@ class DeteksiBola_Pink:
                 cv2.putText(frame, "BOLA", (center[0] + 10, center[1]), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 0, 0), 1)
                 cv2.putText(frame, "(" + str(center[0]) + "," + str(center[1]) + ")", (center[0] + 10, center[1] + 15),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0, 0, 255), 1)
+
+                diameter = float(radius * 2)
+                bolaRealWidth = 6 # 15 cm diameter => 5.9 inci
+                jarakRealDariKamera = 39.37 # 1 Meter dalam Inch
+
+                fokalKamera = self.focalKamera(diameter, jarakRealDariKamera, bolaRealWidth )
+                # 351.80207245464
+
+                jarak = self.jarakKeKamera(jarakRealDariKamera, fokalKamera, diameter ) / 10
 
                 x = (x / lebarFrame) * 2 - 1
                 y = (y / tinggiFrame) * 2 - 1
@@ -175,8 +201,8 @@ class DeteksiBola_Pink:
                 # circleMsg.circles = [circlePoint]
                 #
                 # self.koordinatBola.publish(circleMsg)
-
-                print("X_Center: {} - Y_Center: {}".format(x, y))
+                # print(fokalKamera)
+                print("X_Center: {} - Y_Center: {} - Radius Bola : {} \n Jarak : {} inci \n Fokal : {} ".format(x, y, radius, jarak, fokalKamera))
 
             # self.state_bola(flag)
 
