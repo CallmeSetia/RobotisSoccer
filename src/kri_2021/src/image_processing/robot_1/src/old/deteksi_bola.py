@@ -24,9 +24,7 @@ from std_msgs.msg import Float64
 from std_msgs.msg import Int32
 from std_msgs.msg import Bool
 # tambahan fawwaz
-import roslib
 
-roslib.load_manifest('image_processing')
 import sys
 import os
 from cv_bridge import CvBridge, CvBridgeError

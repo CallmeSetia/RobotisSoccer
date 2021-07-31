@@ -6,6 +6,7 @@ from imutils.video import FileVideoStream
 # from imutils.video import FPS
 
 import numpy as np
+
 import cv2
 import time
 import imutils
@@ -67,7 +68,7 @@ cv2.createTrackbar('V_max', 'result',255,255,nothing)
 
 cv2.createTrackbar('Min_Radius', 'result',255,255,nothing)
 
-video = FileVideoStream(0, transform=filterFrame).start()
+video = FileVideoStream(1, transform=filterFrame).start()
 time.sleep(1.0)
 
 while video.running():
