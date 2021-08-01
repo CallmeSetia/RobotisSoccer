@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+
+    <include file="$(find op3_bringup)/launch/op3_bringup.launch" />
+
+	<node pkg="kri_2021" type="deteksiBola_robot1.py" name="deteksi_bola_robot1" args="" output="screen"></node>
+
+</launch>
+

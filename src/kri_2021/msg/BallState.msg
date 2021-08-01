@@ -1,0 +1,3 @@
+bool bola_state
+string bola_inFrame_Pos
+string last_bola_inFrame_Pos
