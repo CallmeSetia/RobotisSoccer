@@ -28,12 +28,11 @@ class DeteksiBola_Pink:
     fokalLensaKamera = 0.0
     lebarBola_Real = 14.6 #cm
 
+    gmbr1 = '/home/robotis/RobotisSoccer/src/kri_2021/src/image_processing/robot_1/src/bola_pink.png'
+
     def __init__(self, UseTrackbar = False):
-
         self.bridge = CvBridge()
-        gmbr1 = '/home/robotis/RobotisSoccer/src/kri_2021/src/image_processing/robot_1/src/bola_pink.png'
-
-        if self.kalibrasiGambar_Bola(gmbr1, jarakObjek_REAL=64.2) is True:
+        if self.kalibrasiGambar_Bola(DeteksiBola_Pink.gmbr1, jarakObjek_REAL=64.2) is True:
             rospy.loginfo("FOKAL LENSA KAMERA : {} ".format(DeteksiBola_Pink.fokalLensaKamera))
         else :
             rospy.warninfo("GAGAL KALIBRASI GAMBAR BOLA PINK")
@@ -42,7 +41,7 @@ class DeteksiBola_Pink:
         self.mask_pub = 0
         self.koordinatBola = rospy.Publisher("KRSBI/image_processing/deteksi_bola/coordinate/", BolaKoordinat, queue_size=10)
         self.ballState = rospy.Publisher("KRSBI/image_processing/deteksi_bola/ball_state", BallState, queue_size=10)
-
+        self.ballState_LastPos = -1
         if UseTrackbar is True:
             DeteksiBola_Pink.trackbar = True
 
@@ -65,11 +64,19 @@ class DeteksiBola_Pink:
     def nothing(self):
         pass
 
-    def state_bola(self, status):
+    def state_bola(self, status, pos_y = -1, last_pos_y = -1):
+
+        stateBola = BallState()
         if status == 1:
-            self.ballState.publish(1)
-        elif status == 0:
-            self.ballState.publish(0)
+            stateBola.bola_state = bool(True)
+        else:
+            stateBola.bola_state = bool(False)
+
+        stateBola.bola_inFrame_Pos = str(pos_y)
+        stateBola.last_bola_inFrame_Pos =str(last_pos_y)
+
+        self.ballState.publish(stateBola)
+
     def resizeFrame (self, image, width=None, height=None, interpolasi=cv2.INTER_AREA):
         dim = None
         w = image.shape[1]
@@ -189,6 +196,7 @@ class DeteksiBola_Pink:
         lebarFrame =    frame.shape[1]
         tinggiFrame =   frame.shape[0]
 
+        # rospy.loginfo("LEBAR FRAME : {} - TINGGI FRAME : {} ".format(lebarFrame, tinggiFrame))
         frame = cv2.GaussianBlur(frame, (11, 11), 0)
 
 
@@ -229,11 +237,13 @@ class DeteksiBola_Pink:
         result = cv2.bitwise_and(frame, frame, mask=mask)
 
         cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2]  #
+        flag, pos_y = 0, -1
+
         if (len(cnts) > 0):
 
             sortedKontur = sorted(cnts, key=cv2.contourArea, reverse=True)
             x, y, x_ball, y_ball, radius, center, flag = self.DeteksiBola_Kontur(sortedKontur, lebarFrame, tinggiFrame, Min_Radius)
-
+            lokasiBolaFrame = -1
             if flag > 0:
                 cv2.circle(frame, (int(x), int(y)), int(radius), (0, 255, 255), 2)
                 cv2.circle(frame, center, 3, (0, 0, 255), -1)
@@ -247,7 +257,14 @@ class DeteksiBola_Pink:
                 x_filter = (x / lebarFrame) * 2 - 1
                 y_filter = (y / tinggiFrame) * 2 - 1
 
-                # print("X_FRAME : {} - Y_FRAME : {} ".format(lebarFrame, tinggiFrame))
+                if center[1] < 85 :
+                    pos_y = 2
+                elif center[1] > (tinggiFrame - 85) :
+                    pos_y = 1
+                else :
+                    pos_y = 0
+
+                self.ballState_LastPos = pos_y
 
                 koordinatMsg = BolaKoordinat()
                 koordinatMsg.x_bola = float(x_filter)
@@ -259,21 +276,16 @@ class DeteksiBola_Pink:
                 koordinatMsg.radius  = float(radius)
 
                 self.koordinatBola.publish(koordinatMsg)
+            else:
+                pos_y = -1
 
-                # circleMsg = CircleSetStamped()
-                # circlePoint = Point()
-                # circlePoint.x = (center[0] / lebarFrame) * 2 - 1
-                # circlePoint.y = (center[1] / tinggiFrame) * 2 - 1
-                # circlePoint.z = radius
-                # circleMsg.circles = [circlePoint]
-                #
-                # self.koordinatBola.publish(circleMsg)
-                # print(fokalKamera)
+        self.state_bola(flag, pos_y, self.ballState_LastPos)
 
-                # print("X_Center: {} - Y_Center: {} - Radius Bola : {} \n Jarak : {} cm  cm ".format(x, y, radius, jarak))
+        cv2.line(frame, (0, 85), (lebarFrame, 85), (255, 0, 0), 4)
 
-
-            # self.state_bola(flag)
+        cv2.line(frame, (0, (tinggiFrame//2)-20), (lebarFrame, (tinggiFrame//2) - 20), (255, 0, 0), 4)
+        cv2.line(frame, (0, (tinggiFrame//2)+20), (lebarFrame, (tinggiFrame//2) + 20), (255, 0, 0), 4)
+        cv2.line(frame, (0, (tinggiFrame - 85)), (lebarFrame, (tinggiFrame - 85)), (255, 0, 0), 4)
 
         cv2.imshow('result', result)
         cv2.imshow('Masking', mask)
@@ -293,9 +305,7 @@ if __name__ == "__main__":
         while not rospy.is_shutdown():
             rospy.init_node('processing_image_bola', anonymous=False)
             DeteksiBola_Pink(UseTrackbar=False)
-            time.sleep(2.0)
             rospy.spin()
-            cv2.destroyAllWindows()
     except rospy.ROSInterruptException:
         cv2.destroyAllWindows()
         pass
