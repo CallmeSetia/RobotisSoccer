@@ -8,15 +8,15 @@ import struct
 
 
 class BallState(genpy.Message):
-  _md5sum = "01006ac4b22c22b20f8ef7ceb455f461"
+  _md5sum = "de7a3afd02c72a42be761a1cf03a491c"
   _type = "kri_2021/BallState"
   _has_header = False  # flag to mark the presence of a Header object
   _full_text = """bool bola_state
 string bola_inFrame_Pos
-
+string last_bola_inFrame_Pos
 """
-  __slots__ = ['bola_state','bola_inFrame_Pos']
-  _slot_types = ['bool','string']
+  __slots__ = ['bola_state','bola_inFrame_Pos','last_bola_inFrame_Pos']
+  _slot_types = ['bool','string','string']
 
   def __init__(self, *args, **kwds):
     """
@@ -26,7 +26,7 @@ string bola_inFrame_Pos
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       bola_state,bola_inFrame_Pos
+       bola_state,bola_inFrame_Pos,last_bola_inFrame_Pos
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -39,9 +39,12 @@ string bola_inFrame_Pos
         self.bola_state = False
       if self.bola_inFrame_Pos is None:
         self.bola_inFrame_Pos = ''
+      if self.last_bola_inFrame_Pos is None:
+        self.last_bola_inFrame_Pos = ''
     else:
       self.bola_state = False
       self.bola_inFrame_Pos = ''
+      self.last_bola_inFrame_Pos = ''
 
   def _get_types(self):
     """
@@ -58,6 +61,12 @@ string bola_inFrame_Pos
       _x = self.bola_state
       buff.write(_get_struct_B().pack(_x))
       _x = self.bola_inFrame_Pos
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.last_bola_inFrame_Pos
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -87,6 +96,15 @@ string bola_inFrame_Pos
         self.bola_inFrame_Pos = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.bola_inFrame_Pos = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.last_bola_inFrame_Pos = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.last_bola_inFrame_Pos = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -102,6 +120,12 @@ string bola_inFrame_Pos
       _x = self.bola_state
       buff.write(_get_struct_B().pack(_x))
       _x = self.bola_inFrame_Pos
+      length = len(_x)
+      if python3 or type(_x) == unicode:
+        _x = _x.encode('utf-8')
+        length = len(_x)
+      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
+      _x = self.last_bola_inFrame_Pos
       length = len(_x)
       if python3 or type(_x) == unicode:
         _x = _x.encode('utf-8')
@@ -132,6 +156,15 @@ string bola_inFrame_Pos
         self.bola_inFrame_Pos = str[start:end].decode('utf-8', 'rosmsg')
       else:
         self.bola_inFrame_Pos = str[start:end]
+      start = end
+      end += 4
+      (length,) = _struct_I.unpack(str[start:end])
+      start = end
+      end += length
+      if python3:
+        self.last_bola_inFrame_Pos = str[start:end].decode('utf-8', 'rosmsg')
+      else:
+        self.last_bola_inFrame_Pos = str[start:end]
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill

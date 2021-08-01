@@ -25,11 +25,13 @@ struct BallState_
 
   BallState_()
     : bola_state(false)
-    , bola_inFrame_Pos()  {
+    , bola_inFrame_Pos()
+    , last_bola_inFrame_Pos()  {
     }
   BallState_(const ContainerAllocator& _alloc)
     : bola_state(false)
-    , bola_inFrame_Pos(_alloc)  {
+    , bola_inFrame_Pos(_alloc)
+    , last_bola_inFrame_Pos(_alloc)  {
   (void)_alloc;
     }
 
@@ -40,6 +42,9 @@ struct BallState_
 
    typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _bola_inFrame_Pos_type;
   _bola_inFrame_Pos_type bola_inFrame_Pos;
+
+   typedef std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other >  _last_bola_inFrame_Pos_type;
+  _last_bola_inFrame_Pos_type last_bola_inFrame_Pos;
 
 
 
@@ -119,12 +124,12 @@ struct MD5Sum< ::kri_2021::BallState_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "01006ac4b22c22b20f8ef7ceb455f461";
+    return "de7a3afd02c72a42be761a1cf03a491c";
   }
 
   static const char* value(const ::kri_2021::BallState_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x01006ac4b22c22b2ULL;
-  static const uint64_t static_value2 = 0x0f8ef7ceb455f461ULL;
+  static const uint64_t static_value1 = 0xde7a3afd02c72a42ULL;
+  static const uint64_t static_value2 = 0xbe761a1cf03a491cULL;
 };
 
 template<class ContainerAllocator>
@@ -145,7 +150,7 @@ struct Definition< ::kri_2021::BallState_<ContainerAllocator> >
   {
     return "bool bola_state\n\
 string bola_inFrame_Pos\n\
-\n\
+string last_bola_inFrame_Pos\n\
 ";
   }
 
@@ -166,6 +171,7 @@ namespace serialization
     {
       stream.next(m.bola_state);
       stream.next(m.bola_inFrame_Pos);
+      stream.next(m.last_bola_inFrame_Pos);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -188,6 +194,8 @@ struct Printer< ::kri_2021::BallState_<ContainerAllocator> >
     Printer<uint8_t>::stream(s, indent + "  ", v.bola_state);
     s << indent << "bola_inFrame_Pos: ";
     Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.bola_inFrame_Pos);
+    s << indent << "last_bola_inFrame_Pos: ";
+    Printer<std::basic_string<char, std::char_traits<char>, typename ContainerAllocator::template rebind<char>::other > >::stream(s, indent + "  ", v.last_bola_inFrame_Pos);
   }
 };
 

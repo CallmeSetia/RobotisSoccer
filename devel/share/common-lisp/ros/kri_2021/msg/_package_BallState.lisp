@@ -3,4 +3,6 @@
           BOLA_STATE
           BOLA_INFRAME_POS-VAL
           BOLA_INFRAME_POS
+          LAST_BOLA_INFRAME_POS-VAL
+          LAST_BOLA_INFRAME_POS
 ))

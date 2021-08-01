@@ -20,6 +20,7 @@ class BallState {
       // initObj === null is a special case for deserialization where we don't initialize fields
       this.bola_state = null;
       this.bola_inFrame_Pos = null;
+      this.last_bola_inFrame_Pos = null;
     }
     else {
       if (initObj.hasOwnProperty('bola_state')) {
@@ -34,6 +35,12 @@ class BallState {
       else {
         this.bola_inFrame_Pos = '';
       }
+      if (initObj.hasOwnProperty('last_bola_inFrame_Pos')) {
+        this.last_bola_inFrame_Pos = initObj.last_bola_inFrame_Pos
+      }
+      else {
+        this.last_bola_inFrame_Pos = '';
+      }
     }
   }
 
@@ -43,6 +50,8 @@ class BallState {
     bufferOffset = _serializer.bool(obj.bola_state, buffer, bufferOffset);
     // Serialize message field [bola_inFrame_Pos]
     bufferOffset = _serializer.string(obj.bola_inFrame_Pos, buffer, bufferOffset);
+    // Serialize message field [last_bola_inFrame_Pos]
+    bufferOffset = _serializer.string(obj.last_bola_inFrame_Pos, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -54,13 +63,16 @@ class BallState {
     data.bola_state = _deserializer.bool(buffer, bufferOffset);
     // Deserialize message field [bola_inFrame_Pos]
     data.bola_inFrame_Pos = _deserializer.string(buffer, bufferOffset);
+    // Deserialize message field [last_bola_inFrame_Pos]
+    data.last_bola_inFrame_Pos = _deserializer.string(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
     let length = 0;
     length += object.bola_inFrame_Pos.length;
-    return length + 5;
+    length += object.last_bola_inFrame_Pos.length;
+    return length + 9;
   }
 
   static datatype() {
@@ -70,7 +82,7 @@ class BallState {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '01006ac4b22c22b20f8ef7ceb455f461';
+    return 'de7a3afd02c72a42be761a1cf03a491c';
   }
 
   static messageDefinition() {
@@ -78,7 +90,7 @@ class BallState {
     return `
     bool bola_state
     string bola_inFrame_Pos
-    
+    string last_bola_inFrame_Pos
     
     `;
   }
@@ -101,6 +113,13 @@ class BallState {
     }
     else {
       resolved.bola_inFrame_Pos = ''
+    }
+
+    if (msg.last_bola_inFrame_Pos !== undefined) {
+      resolved.last_bola_inFrame_Pos = msg.last_bola_inFrame_Pos;
+    }
+    else {
+      resolved.last_bola_inFrame_Pos = ''
     }
 
     return resolved;
